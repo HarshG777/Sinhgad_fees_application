@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "463503508588",
+    "project_id": "sinhgad-application",
+    "storage_bucket": "sinhgad-application.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:463503508588:android:307a89cc964675298f0449",
+        "android_client_info": {
+          "package_name": "com.example.sinhgad_fees_application"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCDtUja1jzrwNn7FBl5Dn4uVARbrzQ_ZAY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
