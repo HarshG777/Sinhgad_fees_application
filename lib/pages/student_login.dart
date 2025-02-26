@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -17,6 +18,17 @@ class _StudentLoginPageState extends State<StudentLoginPage> {
   // Dropdown selection state
   String? _selectedInstitute;
   final List<String> _institutes = ['LSIT', 'LHOS']; // Options
+
+  // Sign in button action
+
+  signIn() async{
+    print("Email: ${_emailController.text}");
+    await FirebaseAuth.instance.signInWithEmailAndPassword(email: _emailController.text, password: _passwordController.text);
+  }
+
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -180,10 +192,11 @@ class _StudentLoginPageState extends State<StudentLoginPage> {
                               ),
                               onPressed: () {
                                 if (_formKey.currentState?.validate() ?? false) {
-                                  print("Email: ${_emailController.text}");
-                                  print("Password: ${_passwordController.text}");
-                                  print("Institute: $_selectedInstitute");
-                                  Navigator.pushNamed(context, '/student_home');
+                                  // print("Email: ${_emailController.text}");
+                                  // print("Password: ${_passwordController.text}");
+                                  // print("Institute: $_selectedInstitute");
+                                  //Navigator.pushNamed(context, '/student_home');
+                                  signIn();
                                 }
                               },
                               child: Text(

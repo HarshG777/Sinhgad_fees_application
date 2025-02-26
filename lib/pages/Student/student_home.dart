@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:sinhgad_fees_application/components/my_drawer.dart';
 import 'package:sinhgad_fees_application/pages/pending_fees.dart';
 
+
 class StudentHome extends StatefulWidget {
   const StudentHome({super.key});
 
@@ -12,40 +13,8 @@ class StudentHome extends StatefulWidget {
 
 class _StudentHomeState extends State<StudentHome> {
   Color primaryColor = Color(0xFF0056B3); // Deep Blue (Main Theme)
-  // File? _imageFile;
 
-  // //pick image
-  // Future pickImage() async {
-  //   final ImagePicker picker = ImagePicker();
-
-  //   //pick from gallery
-  //   final XFile? image = await picker.pickImage(source: ImageSource.gallery);
-
-  //   //upload image preview
-  //   if (image != null) {
-  //     setState(() {
-  //       _imageFile = File(image.path);
-  //     });
-  //   }
-  // }
-
-  //upload
-  // Future uploadImage() async {
-  //   if (_imageFile == null) return;
-  //   //generate file name
-  //   final fileName = DateTime.now().millisecondsSinceEpoch.toString();
-  //   final path = 'uploads/$fileName';
-
-  //   await Supabase.instance.client.storage
-  //       .from('images')
-  //       .upload(path, _imageFile!)
-  //       .then((value) => ScaffoldMessenger.of(context).showSnackBar(
-  //             const SnackBar(
-  //               content: Text('Image uploaded successfully'),
-  //             ),
-  //           ));
-  // }
-
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -80,10 +49,7 @@ class _StudentHomeState extends State<StudentHome> {
                 children: [
                   //Profile pic
                   GestureDetector(
-                    // onTap: () {
-                    //   pickImage();
-                    //   uploadImage();
-                    // },
+                  
                     child: Column(
                       children: [
                         Container(
@@ -100,12 +66,7 @@ class _StudentHomeState extends State<StudentHome> {
                           ),
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(12),
-                            child: //_imageFile != null
-                                // ? Image.file(
-                                //     _imageFile!,
-                                //     fit: BoxFit.cover,
-                                //   ) :
-                                  const Center(
+                            child: const Center(
                                     child: Icon(
                                       Icons.person,
                                       size: 120,
@@ -120,29 +81,29 @@ class _StudentHomeState extends State<StudentHome> {
                   const SizedBox(
                     width: 25,
                   ),
-                  const Column(
+                  Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "ANUJ SHARMA",
-                        style: TextStyle(
+                        'Harsh Gaikwad',
+                        style: const TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      Text(
+                      const Text(
                         "2022-2025",
                         style: TextStyle(
                           fontSize: 16,
                         ),
                       ),
-                      Text(
+                      const Text(
                         "7887985748",
                         style: TextStyle(
                           fontSize: 16,
                         ),
                       ),
-                      Text(
+                      const Text(
                         "SIT, Lonavala",
                         style: TextStyle(
                           fontSize: 16,

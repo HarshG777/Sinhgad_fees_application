@@ -33,7 +33,7 @@ class Home extends StatelessWidget {
                   ),
                 ),
                 onPressed: () {
-                  Navigator.pushNamed(context, '/student_login');
+                  Navigator.pushNamed(context, '/wrapper');
                 },
                 child: Row(
                   mainAxisSize: MainAxisSize.min, // Fit content size
