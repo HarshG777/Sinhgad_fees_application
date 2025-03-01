@@ -1,11 +1,46 @@
+import 'dart:io';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
-class MyDrawer extends StatelessWidget {
+class MyDrawer extends StatefulWidget {
   const MyDrawer({super.key});
 
   @override
+  State<MyDrawer> createState() => _MyDrawerState();
+}
+
+class _MyDrawerState extends State<MyDrawer> {
+
+  String _imageUrl = "";
+  String _username = "Unknown User";
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUserData();
+  }
+
+  // Load user data (including profile image and username)
+  Future<void> _loadUserData() async {
+    String uid = FirebaseAuth.instance.currentUser!.uid;
+    DocumentSnapshot userDoc =
+        await FirebaseFirestore.instance.collection('users').doc(uid).get();
+    
+    if (userDoc.exists) {
+      Map<String, dynamic> data = userDoc.data() as Map<String, dynamic>;
+      setState(() {
+        _imageUrl = data.containsKey('profileImage') ? data['profileImage'] : "";
+        _username = data.containsKey('name') ? data['name'] : "Unknown User";
+      });
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
+
     const Color backgroundColor = Color(0xFFF4F4F4); // Light Grey
     const Color primaryColor = Color(0xFF0056B3); // Deep Blue (Main Theme)
     return Drawer(
@@ -36,7 +71,9 @@ class MyDrawer extends StatelessWidget {
                         color: Colors.grey[300], // Background color
                         borderRadius: BorderRadius.circular(8), // Square shape
                       ),
-                      child: Icon(Icons.person, size: 50, color: Colors.grey[700]),
+                      child: _imageUrl.isNotEmpty
+                                ? Image.network(_imageUrl, fit: BoxFit.cover)
+                                : const Icon(Icons.person, size: 70, color: Colors.grey),
                     ),
                     SizedBox(width: 15),
                 
@@ -46,7 +83,7 @@ class MyDrawer extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          "Gaikwad Harsh Vilas",
+                          _username,
                           style: GoogleFonts.poppins(fontSize: 16, fontWeight: FontWeight.bold),
                         ),
                         
@@ -97,7 +134,9 @@ class MyDrawer extends StatelessWidget {
           ListTile(
             leading: Icon(Icons.logout, color: primaryColor),
             title: Text("Logout", style: GoogleFonts.poppins()),
-            onTap: () {},
+            onTap: () {
+              FirebaseAuth.instance.signOut();
+            },
           ),
 
           Spacer(),

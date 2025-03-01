@@ -51,19 +51,19 @@ class DefaultFirebaseOptions {
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyCDtUja1jzrwNn7FBl5Dn4uVARbrzQ_ZAY',
-    appId: '1:463503508588:android:307a89cc964675298f0449',
-    messagingSenderId: '463503508588',
-    projectId: 'sinhgad-application',
-    storageBucket: 'sinhgad-application.firebasestorage.app',
+    apiKey: 'AIzaSyB7LP6j0pK9YPExZsK2aYHcasK0PXTERHw',
+    appId: '1:68901365444:android:b55d1cb2b48702bb550b91',
+    messagingSenderId: '68901365444',
+    projectId: 'add-user-data',
+    storageBucket: 'add-user-data.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyDiE5de-nUVTL3tBv1tsGTPw4TW0ZZztkY',
-    appId: '1:463503508588:ios:2d74d3c1feed50f28f0449',
-    messagingSenderId: '463503508588',
-    projectId: 'sinhgad-application',
-    storageBucket: 'sinhgad-application.firebasestorage.app',
+    apiKey: 'AIzaSyBQQNJSaJHNQsnpTA3kZLm3YQLVTVkqTGw',
+    appId: '1:68901365444:ios:d7ae809324e229d5550b91',
+    messagingSenderId: '68901365444',
+    projectId: 'add-user-data',
+    storageBucket: 'add-user-data.firebasestorage.app',
     iosBundleId: 'com.example.sinhgadFeesApplication',
   );
 
@@ -85,4 +85,5 @@ class DefaultFirebaseOptions {
     storageBucket: 'sinhgad-application.firebasestorage.app',
     measurementId: 'G-1R5QGP13LJ',
   );
+
 }

@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:sinhgad_fees_application/pages/forgot_pw_page.dart';
 
 class StudentLoginPage extends StatefulWidget {
   @override
@@ -169,6 +170,7 @@ class _StudentLoginPageState extends State<StudentLoginPage> {
                             child: TextButton(
                               onPressed: () {
                                 // Handle forgot password
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => ForgotPasswordPage()));
                               },
                               child: Text(
                                 'Forgot Password?',
@@ -219,7 +221,7 @@ class _StudentLoginPageState extends State<StudentLoginPage> {
                               Text("Don't have an account?", style: GoogleFonts.poppins()),
                               TextButton(
                                 onPressed: () {
-                                  // Navigate to Register Page
+                                  Navigator.pushNamed(context, '/onboarding');
                                 },
                                 child: Text(
                                   'Register Now',

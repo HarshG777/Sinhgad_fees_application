@@ -1,4 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 
 class RegistrationPage extends StatefulWidget {
   @override
@@ -31,6 +34,200 @@ class _RegistrationPageState extends State<RegistrationPage> {
   final TextEditingController _adharNoController = TextEditingController();
   final TextEditingController _castCategoryController = TextEditingController();
   final TextEditingController _paymentController = TextEditingController();
+
+
+  // Future signUPP() async {
+  //   try {
+  //     await FirebaseAuth.instance.createUserWithEmailAndPassword(
+  //       email: _emailController.text,
+  //       password: _passwordController.text,
+  //     );
+
+  //     // Add user data to firestore
+  //     // await addUserData();
+
+
+  //     AlertDialog alert = AlertDialog(
+  //       title: Text("Success"),
+  //       content: Column(
+  //         mainAxisSize: MainAxisSize.min,
+  //         children: [
+  //           Text("User created successfully"),
+  //           Lottie.asset('assets/lottie/success.json', height: 100,repeat: false),
+  //         ],
+  //       ),
+  //       actions: [
+  //         TextButton(
+  //           onPressed: () {
+  //             Navigator.of(context).pop();
+  //           },
+  //           child: Text("OK"),
+  //         ),
+  //       ],
+  //     );
+  //     showDialog(
+  //       context: context,
+  //       builder: (BuildContext context) {
+  //         return alert;
+  //       },
+  //     );
+      
+  //   } on FirebaseAuthException catch (e) {
+  //     print('Failed with error code: ${e.code}');
+  //     print(e.message);
+  //     AlertDialog alert = AlertDialog(
+  //       title: Text("Error"),
+  //       content: Text(e.message.toString()),
+  //       actions: [
+  //         TextButton(
+  //           onPressed: () {
+  //             Navigator.of(context).pop();
+  //           },
+  //           child: Text("OK"),
+  //         ),
+  //       ],
+  //     );
+  //     showDialog(
+  //       context: context,
+  //       builder: (BuildContext context) {
+  //         return alert;
+  //       },
+  //     );
+  //   }
+
+  
+  // }
+
+  Future signUP() async {
+  try {
+    UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      email: _emailController.text.trim(),
+      password: _passwordController.text.trim(),
+    );
+
+    String uid = userCredential.user!.uid;
+    print('User registered with UID: $uid');
+
+
+    await addUserData(uid); // ✅ Store by UID
+
+    showSuccessDialog();
+    
+  } on FirebaseAuthException catch (e) {
+    Dialog errorDialog = Dialog(
+      child: Container(
+        padding: EdgeInsets.all(16),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text('Error'),
+            Text(e.message ?? 'An error occurred'),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('OK'),
+            ),
+          ],
+        ),
+      ),
+    );
+    showDialog(context: context, builder: (context) => errorDialog);
+  }
+}
+
+// Future addUserData() async {
+//   try {
+//     print('Checking Firestore connection...');
+//     await FirebaseFirestore.instance.collection('test').limit(1).get();
+//     print('Connected to Firestore!');
+
+//     print('Adding user data to Firestore...');
+//     DocumentReference ref = await FirebaseFirestore.instance.collection('users').add({
+//       'new': false,
+//       'email': "New",
+//       'name': "New",
+//       'address': "New",
+//       'contactNo': "new",
+//       'adharNo': "new",
+//       'castCategory': "new",
+//       'payment': "new",
+//       'timestamp': FieldValue.serverTimestamp(), // Useful for ordering
+//     });
+
+//     print('Data successfully added! Document ID: ${ref.id}');
+//   } catch (e) {
+//     print('Error adding data to Firestore: $e');
+//   }
+// }
+
+
+
+
+Future addUserData(String uid) async {
+  print('Adding user data to Firestore...');
+
+  await FirebaseFirestore.instance.collection('users').doc(uid).set({
+    'email': _emailController.text.trim(),
+    'name': _nameController.text.trim(),
+    'address': _addressController.text.trim(),
+    'contactNo': _contactNoController.text.trim(),
+    'adharNo': _adharNoController.text.trim(),
+    'castCategory': _castCategoryController.text.trim(),
+    'payment': _paymentController.text.trim(),
+    'createdAt': FieldValue.serverTimestamp(),
+  });
+
+  print('User data added successfully.');
+}
+
+void showSuccessDialog() {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Text("Success"),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text("User created successfully"),
+            Lottie.asset('assets/lottie/success.json', height: 100, repeat: false),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: Text("OK"),
+          ),
+        ],
+      );
+    },
+  );
+
+  Future.delayed(Duration(seconds: 2), () {
+    if (Navigator.of(context).canPop()) {
+      Navigator.of(context).pop();
+    }
+  });
+}
+
+
+  // Future addUserData() async {
+  //   print('Adding user data to firestore');
+  //   //Add user data to firestore
+  //   await FirebaseFirestore.instance.collection('users').add({
+  //     'new': false,
+  //     'email': _emailController.text.trim(),
+  //     'name': _nameController.text.trim(),
+  //     'address': _addressController.text.trim(),
+  //     'contactNo': _contactNoController.text.trim(),
+  //     'adharNo': _adharNoController.text.trim(),
+  //     'castCategory': _castCategoryController.text.trim(),
+  //     'payment': _paymentController.text.trim(),
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -76,6 +273,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
               setState(() {
                 _currentStep += 1;
               });
+            }else{
+              Navigator.pop(context);
             }
           }
         },
@@ -220,7 +419,17 @@ class _RegistrationPageState extends State<RegistrationPage> {
             isActive: _currentStep >= 4,
             isCompleted: _currentStep > 4,
             children: [
-              Text('User creation status will be checked here.'),
+              Row(
+                children: [
+                  Column(
+                    children: [
+                      Text('email : ${_emailController.text} \npassword : ${_passwordController.text}'),
+                      SizedBox(height: 10),
+                      ElevatedButton(onPressed: signUP, child: Text("Submit")),
+                    ],
+                  )
+                ],
+              )
             ],
           ),
           _buildStep(
